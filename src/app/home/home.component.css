@@ -1,0 +1,37 @@
+.post-container {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+.post-container > .btn-group {
+    width: 25%;
+}
+
+.post {
+    color: black;
+    text-decoration: none;
+    flex-grow: 1;
+}
+
+.post > .card {
+    transition: transform 250ms ease;
+}
+
+.post .card-title {
+    margin-bottom: 0;
+}
+
+.post:hover .card-title,
+.post:focus .card-title {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.post:hover > .card {
+    transform: translateX(10px);
+}
+
+.post-text {
+    text-overflow: ellipsis;
+}
