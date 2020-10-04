@@ -4,10 +4,6 @@
     margin: 1rem 0;
 }
 
-.post-container > .btn-group {
-    width: 25%;
-}
-
 .post {
     color: black;
     text-decoration: none;

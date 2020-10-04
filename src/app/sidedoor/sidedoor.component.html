@@ -1,1 +1,20 @@
-<p>sidedoor works!</p>
+<div class="content-container">
+    <div class="content">
+        <h1>Sidedoor Login</h1>
+        <p>If you aren't Maxim, you shouldn't be here!</p>
+        <div class="content-bg">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <label for="email">Email<span [ngClass]="{'text-danger': email.invalid, 'text-muted': email.valid}">*</span></label>
+                <input type="email" name="email" formControlName="email">
+                <span *ngIf="email.touched && email.invalid" class="text-danger">Please enter a valid email</span>
+    
+                <label for="password">Password<span [ngClass]="{'text-danger': password.invalid, 'text-muted': password.valid}">*</span></label>
+                <input type="password" name="password" formControlName="password">
+                <span *ngIf="password.invalid && password.touched" class="text-danger">Please enter a password</span>
+    
+                <button type="submit" class="btn btn-primary mt-5" [disabled]="loginForm.invalid">Login</button>
+                <span class="login-status">Display login results here</span>
+            </form>
+        </div>
+    </div>
+</div>

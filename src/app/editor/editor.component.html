@@ -1,0 +1,27 @@
+<div class="content-container">
+    <div class="content">
+        <h1>Post editor</h1>
+        <div class="btn-group my-1 w-25">
+            <a routerLink="" class="btn edit-btn">Cancel</a>
+            <button class="btn edit-btn" (click)="previewPost()" [disabled]="editForm.invalid">Preview</button>
+            <button class="btn btn-success" (click)="saveChanges()" [disabled]="editForm.invalid">Save</button>
+        </div>
+        <div class="content-bg">
+            <form [formGroup]="editForm" class="">
+                <label for="title">Title<span [ngClass]="{'text-danger': title.invalid, 'text-muted': title.valid}">*</span></label>
+                <input name="title" type="text" formControlName="title">
+
+                <label for="short_description">Short Description<span [ngClass]="{'text-danger': short_description.invalid, 'text-muted': short_description.valid}">*</span></label>
+                <input name="short_description" type="text" formControlName="short_description">
+
+                <label for="body">Body<span [ngClass]="{'text-danger': body.invalid, 'text-muted': body.valid}">*</span></label>
+                <textarea name="body" formControlName="body"></textarea>
+
+                <div>
+                    <label for="publish" class="mr-3">Publish?</label>
+                    <input style="display: inline-flex" name="publish" type="checkbox" formControlName="publish_post">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

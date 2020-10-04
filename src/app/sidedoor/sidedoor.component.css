@@ -1,0 +1,11 @@
+.form-input,
+.form-submit {
+    display: inherit;
+    flex-direction: inherit;
+}
+
+.login-status {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+}

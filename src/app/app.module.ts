@@ -3,16 +3,18 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EditComponent } from './edit/edit.component';
+import { EditorComponent } from './editor/editor.component';
 import { PostComponent } from './post/post.component';
 import { SidedoorComponent } from './sidedoor/sidedoor.component';
 import { HomeComponent } from './home/home.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 
+import { ReactiveFormsModule } from '@angular/forms'
+
 @NgModule({
   declarations: [
     AppComponent,
-    EditComponent,
+    EditorComponent,
     PostComponent,
     SidedoorComponent,
     HomeComponent,
@@ -20,7 +22,8 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
