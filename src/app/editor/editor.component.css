@@ -1,3 +1,7 @@
+textarea[name="body"] {
+    font-family: monospace;
+}
+
 input[type="checkbox"] {
     display: inline-block;
     height: 1.25rem;

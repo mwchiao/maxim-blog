@@ -25,7 +25,7 @@
 }
 
 .post:hover > .card {
-    transform: translateX(10px);
+    transform: scale(105%);
 }
 
 .post-text {

@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators'
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
+import { BlogPost } from '../blog-post'
 
 @Component({
   selector: 'app-post',
@@ -11,14 +16,30 @@ export class PostComponent implements OnInit {
   @ViewChild(ConfirmationModalComponent)
   private _modal: ConfirmationModalComponent;
 
-  canEdit: boolean = true;
+  private _doc: AngularFirestoreDocument;
+  post: Observable<BlogPost>;
 
-  constructor() { }
+  canEdit: boolean = true;
+  selectedId: string;
+
+  constructor(private route: ActivatedRoute, private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
+    this.selectedId = this.route.snapshot.paramMap.get("id");
+
+    // Gets document
+    this._doc = this.firestore.doc("posts/" + this.selectedId);
+
+    // Maps to BlogPost
+    this.post = this._doc.snapshotChanges().pipe(map( actions => {
+      const data = actions.payload.data() as BlogPost;
+      const id = actions.payload.id;
+      return { id, ...data };
+    }));
   }
 
-  showModal() {
+  showModal(id: string) {
+    this._modal.selectedId = id;
     this._modal.show();
   }
 

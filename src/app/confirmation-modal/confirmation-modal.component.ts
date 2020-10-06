@@ -1,4 +1,5 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'modal',
@@ -7,11 +8,12 @@ import { Component, ElementRef, EventEmitter, OnInit, Output } from '@angular/co
 })
 export class ConfirmationModalComponent implements OnInit {
 
-  @Output("post.delete") deletePost: EventEmitter<string> = new EventEmitter();
+  @Output("post.delete") emitter: EventEmitter<string> = new EventEmitter();
 
   visible: boolean = false;
+  selectedId: string;
 
-  constructor(private el: ElementRef) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -25,8 +27,8 @@ export class ConfirmationModalComponent implements OnInit {
   }
 
   confirmDelete() {
-    this.deletePost.emit("id");
+    this.emitter.emit(this.selectedId);
+    this.router.navigate([""])
     this.close();
   }
-
 }

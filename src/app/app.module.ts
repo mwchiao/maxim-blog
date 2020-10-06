@@ -11,6 +11,10 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
 
 import { ReactiveFormsModule } from '@angular/forms'
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +27,9 @@ import { ReactiveFormsModule } from '@angular/forms'
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

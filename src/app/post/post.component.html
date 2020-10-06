@@ -1,16 +1,16 @@
 <div class="content-container">
     <div class="content">
         <div class="btn-group my-1 w-25" *ngIf="canEdit">
-            <a routerLink="/editor" class="btn edit-btn" role="button">Edit</a>
-            <button (click)="showModal()" class="btn btn-danger">Delete</button>
+            <a [routerLink]="['/editor', selectedId]" class="btn edit-btn" role="button">Edit</a>
+            <button (click)="showModal(selectedId)" class="btn btn-danger">Delete</button>
         </div>
         <div class="content-bg">
-            <h1>blog post title</h1>
+            <h1>{{ (post | async)?.title }}</h1>
             <div class="post-info">
-                <span style="display: block;"><span class="fas fa-calendar mr-1"></span>date posted</span>
-                <span class="badge">webdev</span>
+                <span style="display: block;"><span class="fas fa-calendar mr-1"></span>{{ (post | async)?.date.toDate() | date: "mediumDate" }}</span>
+                <span class="badge" *ngFor="let category of (post | async)?.categories | keyvalue">{{ category.value }}</span>
             </div>
-            <p class="mt-4">blog post body</p>
+            <p class="mt-4">{{ (post | async)?.body }}</p>
         </div>
     </div>
 </div>

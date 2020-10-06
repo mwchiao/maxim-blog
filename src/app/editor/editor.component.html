@@ -1,11 +1,7 @@
 <div class="content-container">
     <div class="content">
-        <h1>Post editor</h1>
-        <div class="btn-group my-1 w-25">
-            <a routerLink="" class="btn edit-btn">Cancel</a>
-            <button class="btn edit-btn" (click)="previewPost()" [disabled]="editForm.invalid">Preview</button>
-            <button class="btn btn-success" (click)="saveChanges()" [disabled]="editForm.invalid">Save</button>
-        </div>
+        <h1 *ngIf="selectedId != 'new'">Edit post</h1>
+        <h1 *ngIf="selectedId == 'new'">New post</h1>
         <div class="content-bg">
             <form [formGroup]="editForm" class="">
                 <label for="title">Title<span [ngClass]="{'text-danger': title.invalid, 'text-muted': title.valid}">*</span></label>
@@ -22,6 +18,11 @@
                     <input style="display: inline-flex" name="publish" type="checkbox" formControlName="publish_post">
                 </div>
             </form>
+        </div>
+        <div class="btn-group my-1 w-25 float-right">
+            <a routerLink="" class="btn edit-btn">Cancel</a>
+            <button class="btn edit-btn" (click)="previewPost()" [disabled]="editForm.invalid">Preview</button>
+            <button class="btn btn-success" (click)="saveChanges()" [disabled]="editForm.invalid">Save</button>
         </div>
     </div>
 </div>
