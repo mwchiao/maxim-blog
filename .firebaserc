@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "maxim-blog": {
+      "hosting": {
+        "maxim-blog": [
+          "maxim-blog"
+        ]
+      }
+    }
+  }
+}
