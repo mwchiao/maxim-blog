@@ -9,10 +9,13 @@
             <a class="post" [routerLink]="['post', post.id]">
                 <div class="card">
                     <div class="card-body">
+                        <span *ngIf="!post.published" class="text-warning"> (unpublished)</span>
                         <h2 class="card-title">{{ post.title }}</h2>
-                        <span class="card-subtitle my-2" style="display: inline-block;">
-                            <span class="fas fa-calendar mr-1"></span>{{ post.date.toDate() | date: "mediumDate" }}
-                        </span>
+                        <div class="card-subtitle my-2">
+                            <span class="fas fa-calendar mr-1"></span>
+                            <span *ngIf="post.date">{{ post.date.toDate() | date: "mediumDate" }}</span>
+                            <span *ngIf="!post.date">Date not found</span>
+                        </div>
                         <p class="post-text">{{ post.short_description }}</p>
                         <span class="badge mr-1" *ngFor="let category of post.categories | keyvalue">{{ category.value }}</span>
                     </div>

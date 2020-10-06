@@ -44,7 +44,7 @@ export class PostComponent implements OnInit {
   }
 
   onDelete(id: string) {
-    console.log(id);
+    this._doc.delete();
   }
 
 }

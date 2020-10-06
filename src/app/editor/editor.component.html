@@ -15,11 +15,11 @@
 
                 <div>
                     <label for="publish" class="mr-3">Publish?</label>
-                    <input style="display: inline-flex" name="publish" type="checkbox" formControlName="publish_post">
+                    <input style="display: inline-flex" name="publish" type="checkbox" formControlName="published">
                 </div>
             </form>
         </div>
-        <div class="btn-group my-1 w-25 float-right">
+        <div class="btn-group my-1 w-25">
             <a routerLink="" class="btn edit-btn">Cancel</a>
             <button class="btn edit-btn" (click)="previewPost()" [disabled]="editForm.invalid">Preview</button>
             <button class="btn btn-success" (click)="saveChanges()" [disabled]="editForm.invalid">Save</button>

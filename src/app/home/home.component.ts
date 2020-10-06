@@ -24,7 +24,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // Maps collection to BlogPosts
-    this.posts = this.firestore.collection("posts", ref => ref.orderBy('date', 'desc')).snapshotChanges().pipe(map( actions => {
+    // TODO: Configure query so unpublished posts do not show
+    this.posts = this.firestore.collection("posts", ref => ref.orderBy("date", "desc")).snapshotChanges().pipe(map( actions => {
       return actions.map( a => {
         const data = a.payload.doc.data() as BlogPost;
         const id = a.payload.doc.id;
@@ -39,7 +40,6 @@ export class HomeComponent implements OnInit {
   }
 
   onDelete(id: string) {
-    console.log("Deleting post: " + id);
+    this.firestore.doc("posts/" + id).delete();
   }
-
 }
