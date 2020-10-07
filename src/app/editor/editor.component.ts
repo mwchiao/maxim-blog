@@ -21,32 +21,37 @@ export class EditorComponent implements OnInit{
   private _post$: Observable<BlogPost>;
   private _postData: BlogPost;
 
+  private _paramsSub: Subscription;
+
+  hidePreview: boolean = true;
+
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
     this.editForm = this.fb.group({
-      title: ['', [
-        Validators.required
-      ]],
-      short_description: ['', [
-        Validators.required
-      ]],
-      body: ['', [
-        Validators.required
-      ]],
+      title: ['', [Validators.required]],
+      short_description: ['', [Validators.required]],
+      body: ['', [Validators.required]],
       published: false
     });
 
     this.selectedId = this.route.snapshot.paramMap.get("id");
-
-    if (this.selectedId != "new") { // Not a new post
-      this._loadData();
-    }
+    // Listens for param changes. This is important when it goes from editing a post to new post
+    this._paramsSub = this.route.params.subscribe( params => {
+      this.selectedId = params.id;
+      if (this.selectedId != "new") { // Not a new post
+        this._loadData();
+      }
+      else {
+        this.editForm.reset();
+      }
+    });
   }
 
   ngOnDestroy(): void {
     // Unsubscribe if the subscription exists
     if (this._subscription) this._subscription.unsubscribe();
+    this._paramsSub.unsubscribe();
   }
 
   get title() {
@@ -61,11 +66,11 @@ export class EditorComponent implements OnInit{
     return this.editForm.get("body");
   }
 
-  get publish_post() {
-    return this.editForm.get("publish_post");
+  get published() {
+    return this.editForm.get("published");
   }
 
-  private _loadData() {
+  private _loadData(): void {
     // Grab existing data from db
     // if post is not in database redirect to new post screen
     this._doc = this.firestore.doc("posts/" + this.selectedId);
@@ -89,7 +94,7 @@ export class EditorComponent implements OnInit{
   }
 
   previewPost() {
-    // Render markdown to HTML and display in modal
+    this.hidePreview = !this.hidePreview;
   }
 
   saveChanges() {
@@ -97,9 +102,12 @@ export class EditorComponent implements OnInit{
     let post = this.editForm.value as BlogPost;
     if (this.selectedId == 'new' && this.editForm.valid) {
       // Write new post to database
-      if (post.published) post.date = new Date(); // Add current time
+      post.date = post.published ? new Date() : null;
 
-      this.firestore.collection<BlogPost>("posts").add(post);
+      this.firestore.collection<BlogPost>("posts").add(post).then( doc => {
+        this.selectedId = doc.id;
+        this.router.navigate(["/post", this.selectedId]);
+      });
     }
     else {
       // Update existing
@@ -107,9 +115,9 @@ export class EditorComponent implements OnInit{
       // Posts that are saved but not published do not have a date field assigned. The field is set upon publication. If a post is unpublished and republished, the initial publish date is used
       if (this._postData.date) post.date = this._postData.date;
       else post.date = new Date(); // Saved draft now marked as public.
-      this._doc.update(post);
+      this._doc.update(post).then(() => {
+        this.router.navigate(["/post", this.selectedId]);
+      });
     }
-
-    this.router.navigate([""]);
   }
 }

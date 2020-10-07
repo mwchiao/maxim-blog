@@ -15,7 +15,7 @@
                 </div>
                 <span class="badge" *ngFor="let category of (post | async)?.categories | keyvalue">{{ category.value }}</span>
             </div>
-            <p class="mt-4">{{ (post | async)?.body }}</p>
+            <div class="mt-4" [innerHTML]=" ((post | async)?.body) | markdown"></div>
         </div>
     </div>
 </div>

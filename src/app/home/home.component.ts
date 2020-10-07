@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // Maps collection to BlogPosts
-    // TODO: Configure query so unpublished posts do not show
+    // TODO: Configure query so unpublished posts do not show by default
     this.posts = this.firestore.collection("posts", ref => ref.orderBy("date", "desc")).snapshotChanges().pipe(map( actions => {
       return actions.map( a => {
         const data = a.payload.doc.data() as BlogPost;

@@ -1,3 +1,7 @@
+.content-bg {
+    margin-bottom: 0;
+}
+
 textarea[name="body"] {
     font-family: monospace;
 }

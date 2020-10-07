@@ -14,6 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
+import { MarkdownPipe } from './markdown.pipe';
+import { AutosizeModule } from 'ngx-autosize'
 
 @NgModule({
   declarations: [
@@ -22,14 +24,16 @@ import { environment } from '../environments/environment';
     PostComponent,
     SidedoorComponent,
     HomeComponent,
-    ConfirmationModalComponent
+    ConfirmationModalComponent,
+    MarkdownPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AutosizeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

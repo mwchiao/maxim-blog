@@ -11,7 +11,7 @@
                 <input name="short_description" type="text" formControlName="short_description">
 
                 <label for="body">Body<span [ngClass]="{'text-danger': body.invalid, 'text-muted': body.valid}">*</span></label>
-                <textarea name="body" formControlName="body"></textarea>
+                <textarea name="body" formControlName="body" autosize [minRows]="5"></textarea>
 
                 <div>
                     <label for="publish" class="mr-3">Publish?</label>
@@ -20,9 +20,13 @@
             </form>
         </div>
         <div class="btn-group my-1 w-25">
-            <a routerLink="" class="btn edit-btn">Cancel</a>
-            <button class="btn edit-btn" (click)="previewPost()" [disabled]="editForm.invalid">Preview</button>
+            <a [routerLink]="selectedId == 'new' ? [''] : ['/post', selectedId]" class="btn edit-btn">Cancel</a>
+            <button class="btn edit-btn" (click)="previewPost()">Preview</button>
             <button class="btn btn-success" (click)="saveChanges()" [disabled]="editForm.invalid">Save</button>
+        </div>
+
+        <div class="content-bg" [hidden]="hidePreview">
+            <div [innerHTML]="body.value | markdown"></div>
         </div>
     </div>
 </div>
