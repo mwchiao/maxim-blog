@@ -1,17 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { BlogPost } from '../blog-post'
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnDestroy {
 
   @ViewChild(ConfirmationModalComponent)
   private _modal: ConfirmationModalComponent;
@@ -22,9 +23,13 @@ export class PostComponent implements OnInit {
   canEdit: boolean = true;
   selectedId: string;
 
-  constructor(private route: ActivatedRoute, private firestore: AngularFirestore) { }
+  private _sub: Subscription;
+
+  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, private auth: AuthService) { }
 
   ngOnInit(): void {
+    this._sub = this.auth.loginEmitter.subscribe( value => this.canEdit = value);
+
     this.selectedId = this.route.snapshot.paramMap.get("id");
 
     // Gets document
@@ -38,12 +43,16 @@ export class PostComponent implements OnInit {
     }));
   }
 
-  showModal(id: string) {
+  ngOnDestroy(): void {
+    this._sub.unsubscribe();
+  }
+
+  showModal(id: string): void {
     this._modal.selectedId = id;
     this._modal.show();
   }
 
-  onDelete(id: string) {
+  onDelete(id: string): void {
     this._doc.delete();
   }
 

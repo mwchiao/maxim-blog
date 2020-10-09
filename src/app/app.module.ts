@@ -8,6 +8,7 @@ import { PostComponent } from './post/post.component';
 import { SidedoorComponent } from './sidedoor/sidedoor.component';
 import { HomeComponent } from './home/home.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { AuthService } from './auth.service';
 
 import { ReactiveFormsModule } from '@angular/forms'
 
@@ -35,7 +36,7 @@ import { AutosizeModule } from 'ngx-autosize'
     AngularFirestoreModule,
     AutosizeModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

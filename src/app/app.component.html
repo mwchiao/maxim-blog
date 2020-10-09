@@ -1,9 +1,9 @@
 <header class="fixed-top bg-light">
   <div class="d-flex align-items-center justify-content-between px-3">
     <a routerLink="">Maxim's Blog</a>
-    <div id="admin-controls">
+    <div id="admin-controls" *ngIf="canEdit">
       <a [routerLink]="['/editor', 'new']" class="btn btn-light" title="Add new post"><span class="fas fa-plus"></span></a>
-      <button class="btn btn-light" title="Logout"><span class="fas fa-sign-out-alt"></span></button>
+      <button (click)="logout()" class="btn btn-light" title="Logout"><span class="fas fa-sign-out-alt"></span></button>
     </div>
   </div>
 </header>

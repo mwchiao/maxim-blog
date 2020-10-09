@@ -14,7 +14,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "@angular/fire/firestore"
+              "@angular/fire/firestore",
+              "@firebase/auth"
             ],
             "outputPath": "dist/maxim-blog",
             "index": "src/index.html",

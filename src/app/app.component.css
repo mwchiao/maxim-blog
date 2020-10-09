@@ -1,3 +1,13 @@
+header {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+}
+
+header > div {
+    flex-grow: 1;
+}
+
 header a{
     color: black;
 }

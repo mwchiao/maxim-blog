@@ -12,8 +12,13 @@
                 <input type="password" name="password" formControlName="password">
                 <span *ngIf="password.invalid && password.touched" class="text-danger">Please enter a password</span>
     
-                <button type="submit" class="btn btn-primary mt-5" [disabled]="loginForm.invalid">Login</button>
-                <span class="login-status">Display login results here</span>
+                <button type="submit" class="btn btn-primary mt-5" [disabled]="loginForm.invalid || loggingIn">
+                    <div *ngIf="loggingIn" class="spinner-border spinner-border-sm text-light" role="status">
+                        <span class="sr-only">Logging In...</span>
+                    </div>
+                    <span *ngIf="!loggingIn">Login</span>
+                </button>
+                <span class="login-status">{{ message }}</span>
             </form>
         </div>
     </div>

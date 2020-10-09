@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
-import { BlogPost } from '../blog-post'
+import { BlogPost } from '../blog-post';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,18 +12,22 @@ import { BlogPost } from '../blog-post'
   styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   @ViewChild(ConfirmationModalComponent)
   private _modal: ConfirmationModalComponent;
 
-  canEdit: boolean = true;
+  private _sub: Subscription;
+
+  canEdit: boolean;
 
   posts: Observable<BlogPost[]>;
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore, private auth: AuthService) { }
 
   ngOnInit(): void {
+    this._sub = this.auth.loginEmitter.subscribe( value =>  this.canEdit = value);
+
     // Maps collection to BlogPosts
     // TODO: Configure query so unpublished posts do not show by default
     this.posts = this.firestore.collection("posts", ref => ref.orderBy("date", "desc")).snapshotChanges().pipe(map( actions => {
@@ -32,6 +37,10 @@ export class HomeComponent implements OnInit {
         return { id, ...data };
       });
     }));
+  }
+
+  ngOnDestroy(): void {
+    this._sub.unsubscribe();
   }
 
   showModal(id: string) {

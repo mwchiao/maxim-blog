@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router'
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore'
 import { Observable, Subscription } from 'rxjs'
@@ -20,7 +20,6 @@ export class EditorComponent implements OnInit{
   private _subscription: Subscription;
   private _post$: Observable<BlogPost>;
   private _postData: BlogPost;
-
   private _paramsSub: Subscription;
 
   hidePreview: boolean = true;
@@ -39,12 +38,8 @@ export class EditorComponent implements OnInit{
     // Listens for param changes. This is important when it goes from editing a post to new post
     this._paramsSub = this.route.params.subscribe( params => {
       this.selectedId = params.id;
-      if (this.selectedId != "new") { // Not a new post
-        this._loadData();
-      }
-      else {
-        this.editForm.reset();
-      }
+      if (this.selectedId != "new") this._loadData(); // Not a new post
+      else this.editForm.reset(); // Reset form if it is a new post
     });
   }
 
@@ -54,19 +49,19 @@ export class EditorComponent implements OnInit{
     this._paramsSub.unsubscribe();
   }
 
-  get title() {
+  get title(): AbstractControl {
     return this.editForm.get("title");
   }
 
-  get short_description() {
+  get short_description(): AbstractControl {
     return this.editForm.get("short_description");
   }
 
-  get body() {
+  get body(): AbstractControl {
     return this.editForm.get("body");
   }
 
-  get published() {
+  get published(): AbstractControl {
     return this.editForm.get("published");
   }
 
@@ -93,11 +88,11 @@ export class EditorComponent implements OnInit{
     });
   }
 
-  previewPost() {
+  previewPost(): void {
     this.hidePreview = !this.hidePreview;
   }
 
-  saveChanges() {
+  saveChanges(): void {
     // write back to database
     let post = this.editForm.value as BlogPost;
     if (this.selectedId == 'new' && this.editForm.valid) {
@@ -111,7 +106,6 @@ export class EditorComponent implements OnInit{
     }
     else {
       // Update existing
-      
       // Posts that are saved but not published do not have a date field assigned. The field is set upon publication. If a post is unpublished and republished, the initial publish date is used
       if (this._postData.date) post.date = this._postData.date;
       else post.date = new Date(); // Saved draft now marked as public.
