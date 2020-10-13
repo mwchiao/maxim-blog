@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router'
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore'
-import { Observable, Subscription } from 'rxjs'
+import { Subscription } from 'rxjs'
 import { BlogPost } from '../blog-post';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit',
@@ -18,7 +17,6 @@ export class EditorComponent implements OnInit{
 
   private _doc: AngularFirestoreDocument;
   private _subscription: Subscription;
-  private _post$: Observable<BlogPost>;
   private _postData: BlogPost;
   private _paramsSub: Subscription;
 
@@ -46,7 +44,7 @@ export class EditorComponent implements OnInit{
   ngOnDestroy(): void {
     // Unsubscribe if the subscription exists
     if (this._subscription) this._subscription.unsubscribe();
-    this._paramsSub.unsubscribe();
+    if (this._paramsSub) this._paramsSub.unsubscribe();
   }
 
   get title(): AbstractControl {
@@ -69,22 +67,20 @@ export class EditorComponent implements OnInit{
     // Grab existing data from db
     // if post is not in database redirect to new post screen
     this._doc = this.firestore.doc("posts/" + this.selectedId);
-    this._post$ = this._doc.snapshotChanges().pipe(map(actions => {
-      const data = actions.payload.data() as BlogPost;
-      const id = actions.payload.id;
-      return { id, ...data };
-    }));
 
-    // if document does not exist, show an error and redirect
+    this._subscription = this._doc.get().subscribe( post => {
+      if (post.exists) {
+        this._postData = post.data() as BlogPost;
 
-    this._subscription = this._post$.subscribe( data => {
-      this.editForm.patchValue({
-        title: data.title,
-        short_description: data.short_description,
-        body: data.body,
-        published: data.published
-      });
-      this._postData = data;
+        // Autofill form with existing data
+        this.editForm.patchValue({
+          title: this._postData.title,
+          short_description: this._postData.short_description,
+          body: this._postData.body,
+          published: this._postData.published
+        });
+      }
+      else alert("post does not exists");
     });
   }
 

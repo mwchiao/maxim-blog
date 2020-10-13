@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-sidedoor',
@@ -15,7 +15,7 @@ export class SidedoorComponent implements OnInit {
 
   loggingIn: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) { }
+  constructor(private fb: FormBuilder, private router: Router, private auth: UserService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -39,7 +39,7 @@ export class SidedoorComponent implements OnInit {
 
   onSubmit(): void {
     this.loggingIn = true;
-    this.auth.signIn(this.email.value, this.password.value).then( 
+    this.auth.signInWithEmailAndPassword(this.email.value, this.password.value).then( 
       () => {
         this.loggingIn = false;
         this.router.navigate([""]);

@@ -8,15 +8,15 @@ import { PostComponent } from './post/post.component';
 import { SidedoorComponent } from './sidedoor/sidedoor.component';
 import { HomeComponent } from './home/home.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
-import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { MarkdownPipe } from './markdown.pipe';
-import { AutosizeModule } from 'ngx-autosize'
+import { AutosizeModule } from 'ngx-autosize';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import { AutosizeModule } from 'ngx-autosize'
     AngularFirestoreModule,
     AutosizeModule
   ],
-  providers: [AuthService],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { BlogPost } from '../blog-post';
-import { AuthService } from '../auth.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-home',
@@ -23,10 +23,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   posts: Observable<BlogPost[]>;
 
-  constructor(private firestore: AngularFirestore, private auth: AuthService) { }
+  constructor(private firestore: AngularFirestore, private auth: UserService, private cdRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this._sub = this.auth.loginEmitter.subscribe( value =>  this.canEdit = value);
+    this._sub = this.auth.loginEmitter.subscribe( value => { this.canEdit = value; this.cdRef.detectChanges() });
 
     // Maps collection to BlogPosts
     // TODO: Configure query so unpublished posts do not show by default

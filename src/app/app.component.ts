@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,7 @@ export class AppComponent {
   canEdit: boolean;
   private _loginSub: Subscription;
 
-  constructor(private router: Router, private auth: AuthService, private cdRef: ChangeDetectorRef) { }
+  constructor(private router: Router, private auth: UserService, private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     this._loginSub = this.auth.loginEmitter
@@ -36,5 +36,5 @@ export class AppComponent {
         this.router.navigate([""]);
       } ) // Show success message
       .catch(e => console.log(e)) // Show error message
-    }
+  }
 }

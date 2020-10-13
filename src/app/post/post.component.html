@@ -5,17 +5,17 @@
             <button (click)="showModal(selectedId)" class="btn btn-danger">Delete</button>
         </div>
         <div class="content-bg">
-            <span *ngIf="!(post | async)?.published" class="text-warning"> (unpublished)</span>
-            <h1>{{ (post | async)?.title }}</h1>
+            <span *ngIf="!post.published" class="text-warning"> (unpublished)</span>
+            <h1>{{ post.title }}</h1>
             <div class="post-info">
                 <div>
                     <span class="fas fa-calendar mr-1"></span>
-                    <span *ngIf="(post | async)?.date">{{ (post | async)?.date.toDate() | date: "mediumDate" }}</span>
-                    <span *ngIf="!(post | async)?.date">Date not found</span>
+                    <span *ngIf="post.date">{{ post.date.toDate() | date: "mediumDate" }}</span>
+                    <span *ngIf="!post.date">Date not found</span>
                 </div>
-                <span class="badge" *ngFor="let category of (post | async)?.categories | keyvalue">{{ category.value }}</span>
+                <!-- <span class="badge" *ngFor="let category of post.categories | keyvalue">{{ category.value }}</span> -->
             </div>
-            <div class="mt-4" [innerHTML]=" ((post | async)?.body) | markdown"></div>
+            <div class="mt-4" [innerHTML]="post.body | markdown"></div>
         </div>
     </div>
 </div>
