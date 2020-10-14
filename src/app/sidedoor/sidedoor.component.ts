@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms'
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 
@@ -9,10 +9,8 @@ import { UserService } from '../user.service';
   styleUrls: ['./sidedoor.component.css']
 })
 export class SidedoorComponent implements OnInit {
-
   loginForm: FormGroup;
   message: string;
-
   loggingIn: boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router, private auth: UserService) { }
@@ -29,11 +27,11 @@ export class SidedoorComponent implements OnInit {
     });
   }
 
-  get email() {
+  get email(): AbstractControl {
     return this.loginForm.get("email");
   }
 
-  get password() {
+  get password(): AbstractControl {
     return this.loginForm.get("password");
   }
 

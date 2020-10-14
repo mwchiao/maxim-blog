@@ -4,6 +4,11 @@
     margin: 1rem 0;
 }
 
+p.text-danger {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
 .post {
     color: black;
     text-decoration: none;
@@ -11,6 +16,7 @@
 }
 
 .post > .card {
+    height: 30vh;
     transition: transform 250ms ease;
 }
 
@@ -29,5 +35,6 @@
 }
 
 .post-text {
+    margin-top: 2.0rem;
     text-overflow: ellipsis;
 }

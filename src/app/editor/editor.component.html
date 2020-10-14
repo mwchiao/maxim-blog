@@ -3,11 +3,14 @@
         <h1 *ngIf="selectedId != 'new'">Edit post</h1>
         <h1 *ngIf="selectedId == 'new'">New post</h1>
         <div class="content-bg">
-            <form [formGroup]="editForm" class="">
+            <form [formGroup]="editForm">
                 <label for="title">Title<span [ngClass]="{'text-danger': title.invalid, 'text-muted': title.valid}">*</span></label>
                 <input name="title" type="text" formControlName="title">
 
-                <label for="short_description">Short Description<span [ngClass]="{'text-danger': short_description.invalid, 'text-muted': short_description.valid}">*</span></label>
+                <label for="short_description">
+                    Short Description
+                    <span [ngClass]="{'text-danger': short_description.invalid, 'text-muted': short_description.valid}">*</span>
+                </label>
                 <input name="short_description" type="text" formControlName="short_description">
 
                 <label for="body">Body<span [ngClass]="{'text-danger': body.invalid, 'text-muted': body.valid}">*</span></label>
@@ -15,7 +18,7 @@
 
                 <div>
                     <label for="publish" class="mr-3">Publish?</label>
-                    <input style="display: inline-flex" name="publish" type="checkbox" formControlName="published">
+                    <input name="publish" type="checkbox" formControlName="published">
                 </div>
             </form>
         </div>
@@ -26,6 +29,7 @@
         </div>
 
         <div class="content-bg" [hidden]="hidePreview">
+            <h1>{{ title.value }}</h1>
             <div [innerHTML]="body.value | markdown"></div>
         </div>
     </div>

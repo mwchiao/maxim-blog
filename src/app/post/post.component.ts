@@ -15,16 +15,14 @@ export class PostComponent implements OnInit, OnDestroy {
 
   @ViewChild(ConfirmationModalComponent)
   private _modal: ConfirmationModalComponent;
-
+  
   private _doc: AngularFirestoreDocument;
-  //post: Observable<BlogPost>;
   private _post: BlogPost;
+  private _loginSub: Subscription;
+  private _postSub: Subscription;
 
   canEdit: boolean = true;
   selectedId: string;
-
-  private _loginSub: Subscription;
-  private _postSub: Subscription;
 
   constructor(private route: ActivatedRoute, private firestore: AngularFirestore, private auth: UserService) { }
 

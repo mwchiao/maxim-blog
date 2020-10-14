@@ -18,9 +18,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private _modal: ConfirmationModalComponent;
 
   private _sub: Subscription;
-
   canEdit: boolean;
-
   posts: Observable<BlogPost[]>;
 
   constructor(private firestore: AngularFirestore, private auth: UserService, private cdRef: ChangeDetectorRef) { }
@@ -43,12 +41,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this._sub.unsubscribe();
   }
 
-  showModal(id: string) {
+  showModal(id: string): void {
     this._modal.selectedId = id;
     this._modal.show();
   }
 
-  onDelete(id: string) {
+  onDelete(id: string): void {
     this.firestore.doc("posts/" + id).delete();
   }
 }

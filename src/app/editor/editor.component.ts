@@ -11,16 +11,14 @@ import { BlogPost } from '../blog-post';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit{
-
-  editForm: FormGroup;
-  selectedId: string;
-
   private _doc: AngularFirestoreDocument;
   private _subscription: Subscription;
   private _postData: BlogPost;
   private _paramsSub: Subscription;
 
   hidePreview: boolean = true;
+  editForm: FormGroup;
+  selectedId: string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private firestore: AngularFirestore) { }
 

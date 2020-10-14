@@ -5,7 +5,7 @@
             <button (click)="showModal(selectedId)" class="btn btn-danger">Delete</button>
         </div>
         <div class="content-bg">
-            <span *ngIf="!post.published" class="text-warning"> (unpublished)</span>
+            <p *ngIf="!post.published" class="text-danger">(Draft)</p>
             <h1>{{ post.title }}</h1>
             <div class="post-info">
                 <div>

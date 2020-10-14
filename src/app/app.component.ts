@@ -16,7 +16,7 @@ export class AppComponent {
 
   constructor(private router: Router, private auth: UserService, private cdRef: ChangeDetectorRef) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this._loginSub = this.auth.loginEmitter
                       .subscribe( value => 
                         {
@@ -25,16 +25,16 @@ export class AppComponent {
                         });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._loginSub.unsubscribe();
   }
 
-  logout() {
+  logout(): void {
     this.auth.signOut()
       .then( () => {
         this.cdRef.detectChanges();
         this.router.navigate([""]);
-      } ) // Show success message
+      }) // Show success message
       .catch(e => console.log(e)) // Show error message
   }
 }
