@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { BlogPost } from '../blog-post';
 import { UserService } from '../user.service';
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   canEdit: boolean;
   posts: Observable<BlogPost[]>;
 
-  constructor(private firestore: AngularFirestore, private auth: UserService, private cdRef: ChangeDetectorRef) { }
+  constructor(private firestore: AngularFirestore, private auth: UserService, private cdRef: ChangeDetectorRef, private toast: ToastService) { }
 
   ngOnInit(): void {
     this._sub = this.auth.loginEmitter.subscribe( value => { this.canEdit = value; this.cdRef.detectChanges() });
@@ -48,5 +49,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onDelete(id: string): void {
     this.firestore.doc("posts/" + id).delete();
+  }
+
+  testSuccess() {
+    this.toast.displayMessage("Success!", "success");
+  }
+
+  testError() {
+    this.toast.displayMessage("Something went wrong", "error");
   }
 }

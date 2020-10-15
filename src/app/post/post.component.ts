@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { BlogPost } from '../blog-post';
 import { UserService } from '../user.service';
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-post',
@@ -17,14 +18,14 @@ export class PostComponent implements OnInit, OnDestroy {
   private _modal: ConfirmationModalComponent;
   
   private _doc: AngularFirestoreDocument;
-  private _post: BlogPost;
+  private _post: BlogPost = {title: "", short_description: "", body: "", published: false, date: null};
   private _loginSub: Subscription;
   private _postSub: Subscription;
 
   canEdit: boolean = true;
   selectedId: string;
 
-  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, private auth: UserService) { }
+  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, private auth: UserService, private toast: ToastService) { }
 
   ngOnInit(): void {
     this._loginSub = this.auth.loginEmitter.subscribe( value => this.canEdit = value);
@@ -37,7 +38,7 @@ export class PostComponent implements OnInit, OnDestroy {
     // Maps to BlogPost
     this._postSub = this._doc.get().subscribe( post => {
       if (post.exists) this._post = post.data() as BlogPost;
-      else alert("post not found");
+      else this.toast.displayMessage("Post not found", "error");
     });
   }
 

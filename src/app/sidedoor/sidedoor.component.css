@@ -4,16 +4,8 @@
     flex-direction: inherit;
 }
 
-.login-status {
-    margin-top: 0.5rem;
-    display: flex;
-    justify-content: center;
-    color: red;
-    font-weight: bold;
-}
-
 @media screen and (min-width: 575.98px) {
     .content-bg {
-        width: 40%;
+        width: 55%;
     }
 }

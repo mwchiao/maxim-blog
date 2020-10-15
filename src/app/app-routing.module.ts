@@ -4,7 +4,9 @@ import { PostComponent } from './post/post.component';
 import { EditorComponent } from './editor/editor.component';
 import { HomeComponent } from './home/home.component';
 import { SidedoorComponent } from './sidedoor/sidedoor.component';
-import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(["sidedoor"]);
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -16,7 +18,8 @@ const routes: Routes = [
   { 
     path: "editor/:id", 
     component: EditorComponent,
-    canActivate: [AngularFireAuthGuard]
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   { path: "**", redirectTo: "", pathMatch: "full" } // Replace with page not found
 ];

@@ -1,0 +1,16 @@
+.toast-wrapper {
+    position: fixed;
+    top: 3.25rem;
+    right: 0;
+    width: 100%;
+    z-index: 5;
+}
+
+.toast-message {
+    padding: 10px 15px;
+    margin: 0.25rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+}

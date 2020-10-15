@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms'
 import { Router } from '@angular/router';
+import { ToastService } from '../toast.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class SidedoorComponent implements OnInit {
   message: string;
   loggingIn: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private auth: UserService) { }
+  constructor(private fb: FormBuilder, private router: Router, private auth: UserService, private toast: ToastService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -44,7 +45,8 @@ export class SidedoorComponent implements OnInit {
       },
       (error) => {
         this.loggingIn = false;
-        this.message = error.message
+        const errMsg = "Something went wrong: " + error.message;
+        this.toast.displayMessage(errMsg, "error");
       }
     );
   }
