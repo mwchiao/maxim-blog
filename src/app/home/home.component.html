@@ -1,6 +1,9 @@
 <div class="content-container">
     <div class="content">
-        <h1>Posts</h1>
+        <div class="jumbotron">
+            <h1>// Welcome to Maxim's Blog</h1>
+        </div>
+        <h2>Feed</h2>
         <div *ngIf="!loading">
             <ul class="p-0" *ngIf="posts.length else noPosts">
                 <li class="post-container" *ngFor="let post of posts">
@@ -9,8 +12,7 @@
                             <div class="card-body">
                                 <p *ngIf="!post.published" class="text-danger">(Draft)</p>
                                 <h2 class="card-title">{{ post.title }}</h2>
-                                <div class="card-subtitle my-2">
-                                    <span class="fas fa-calendar mr-1"></span>
+                                <div class="card-subtitle my-2 text-muted">
                                     <span *ngIf="post.date">{{ post.date.toDate() | date: "mediumDate" }}</span>
                                     <span *ngIf="!post.date">Date not found</span>
                                 </div>
