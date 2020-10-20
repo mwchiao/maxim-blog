@@ -30,6 +30,7 @@ form textarea:active {
 .content-container {
     display: flex;
     justify-content: center;
+    padding-top: 1rem;
 }
 
 .content {

@@ -1,10 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { BlogPost } from '../blog-post';
-import { UserService } from '../user.service';
 import { ToastService } from '../toast.service';
 
 @Component({
@@ -12,28 +10,30 @@ import { ToastService } from '../toast.service';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-export class PostComponent implements OnInit, OnDestroy {
-
-  @ViewChild(ConfirmationModalComponent)
-  private _modal: ConfirmationModalComponent;
-  
+export class PostComponent implements OnInit, OnDestroy {  
   private _doc: AngularFirestoreDocument;
-  private _post: BlogPost = {title: "", short_description: "", body: "", published: false, date: null};
-  private _loginSub: Subscription;
+  private _post: BlogPost;
   private _postSub: Subscription;
-
-  canEdit: boolean = true;
+  
   selectedId: string;
+  loading: boolean = true;
 
   constructor(
     private route: ActivatedRoute, 
-    private firestore: AngularFirestore, 
-    private auth: UserService, 
+    private router: Router,
+    private firestore: AngularFirestore,
     private toast: ToastService
   ) { }
 
   ngOnInit(): void {
-    this._loginSub = this.auth.loginEmitter.subscribe( value => this.canEdit = value);
+    this._post = {
+      title: "", 
+      short_description: "", 
+      body: "", 
+      published: true,
+      date: null,
+      categories: null
+    };
 
     this.selectedId = this.route.snapshot.paramMap.get("id");
 
@@ -43,22 +43,16 @@ export class PostComponent implements OnInit, OnDestroy {
     // Maps to BlogPost
     this._postSub = this._doc.get().subscribe( post => {
       if (post.exists) this._post = post.data() as BlogPost;
-      else this.toast.displayMessage("Post not found", "error");
+      else {
+        this.router.navigate(["/404"]);
+        this.toast.displayMessage("Post not found", "error");
+      };
+      this.loading = false;
     });
   }
 
   ngOnDestroy(): void {
-    this._loginSub.unsubscribe();
     this._postSub.unsubscribe();
-  }
-
-  showModal(id: string): void {
-    this._modal.selectedId = id;
-    this._modal.show();
-  }
-
-  onDelete(id: string): void {
-    this._doc.delete();
   }
 
   get post(): BlogPost {

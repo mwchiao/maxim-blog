@@ -1,11 +1,8 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { BlogPost } from '../blog-post';
-import { UserService } from '../user.service';
-import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-home',
@@ -14,49 +11,30 @@ import { ToastService } from '../toast.service';
 })
 
 export class HomeComponent implements OnInit, OnDestroy {
+  private _posts$: Observable<BlogPost[]>;
+  private _postsSub: Subscription;
+  loading: boolean = true;
+  posts: BlogPost[] = [];
 
-  @ViewChild(ConfirmationModalComponent)
-  private _modal: ConfirmationModalComponent;
-
-  private _sub: Subscription;
-  canEdit: boolean;
-  posts: Observable<BlogPost[]>;
-
-  constructor(
-    private firestore: AngularFirestore, 
-    private auth: UserService, 
-    private cdRef: ChangeDetectorRef, 
-    private toast: ToastService
-  ) { }
+  constructor(private firestore: AngularFirestore) { }
 
   ngOnInit(): void {
-    this._sub = this.auth.loginEmitter
-                  .subscribe( value => { 
-                    this.canEdit = value; 
-                    this.cdRef.detectChanges() 
-                  });
-
     // Maps collection to BlogPosts
     // TODO: Configure query so unpublished posts do not show by default
-    this.posts = this.firestore.collection("posts", ref => ref.orderBy("date", "desc")).snapshotChanges().pipe(map( actions => {
+    this._posts$ = this.firestore.collection("posts", ref => ref.orderBy("date", "desc")).snapshotChanges().pipe(map( actions => {
       return actions.map( a => {
         const data = a.payload.doc.data() as BlogPost;
         const id = a.payload.doc.id;
         return { id, ...data };
       });
     }));
+    this._postsSub = this._posts$.subscribe( (posts) => {
+      this.loading = false;
+      this.posts = posts;
+    });
   }
 
   ngOnDestroy(): void {
-    this._sub.unsubscribe();
-  }
-
-  showModal(id: string): void {
-    this._modal.selectedId = id;
-    this._modal.show();
-  }
-
-  onDelete(id: string): void {
-    this.firestore.doc("posts/" + id).delete();
+    if (this._postsSub) this._postsSub.unsubscribe();
   }
 }

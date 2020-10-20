@@ -1,27 +1,26 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PostComponent } from './post/post.component';
-import { EditorComponent } from './editor/editor.component';
 import { HomeComponent } from './home/home.component';
-import { SidedoorComponent } from './sidedoor/sidedoor.component';
-import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
-
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(["sidedoor"]);
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
-  { path: "", component: HomeComponent },
+  { 
+    path: "", 
+    component: HomeComponent },
   { 
     path: "post/:id", 
     component: PostComponent
   },
-  { path: "sidedoor", component: SidedoorComponent },
-  { 
-    path: "editor/:id", 
-    component: EditorComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin }
+  {
+    path:"404",
+    component: NotFoundComponent
   },
-  { path: "**", redirectTo: "", pathMatch: "full" } // Replace with page not found
+  { 
+    path: "**", 
+    redirectTo: "404",
+    pathMatch: "full"
+  } // Replace with page not found
 ];
 
 @NgModule({

@@ -3,12 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EditorComponent } from './editor/editor.component';
 import { PostComponent } from './post/post.component';
-import { SidedoorComponent } from './sidedoor/sidedoor.component';
 import { HomeComponent } from './home/home.component';
-import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
-import { UserService } from './user.service';
 import { ToastService } from './toast.service';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,18 +14,21 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { MarkdownPipe } from './markdown.pipe';
 import { AutosizeModule } from 'ngx-autosize';
-import { ToastMessagesComponent } from './toast-messages/toast-messages.component';
+import { ToastMessagesComponent } from './ui/toast-messages/toast-messages.component';
+import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EditorComponent,
     PostComponent,
-    SidedoorComponent,
     HomeComponent,
-    ConfirmationModalComponent,
-    MarkdownPipe,
-    ToastMessagesComponent
+    ToastMessagesComponent,
+    LoadingSpinnerComponent,
+    NotFoundComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -37,9 +36,10 @@ import { ToastMessagesComponent } from './toast-messages/toast-messages.componen
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AutosizeModule
+    AutosizeModule,
+    MarkdownModule.forRoot()
   ],
-  providers: [UserService, ToastService],
+  providers: [ToastService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

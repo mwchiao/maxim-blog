@@ -4,4 +4,5 @@ export interface BlogPost {
     date: Date;
     body: string;
     published: boolean;
+    categories: string[];
 }

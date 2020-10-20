@@ -1,9 +1,5 @@
 <div class="content-container">
     <div class="content">
-        <div class="btn-group my-1 w-25" *ngIf="canEdit">
-            <a [routerLink]="['/editor', selectedId]" class="btn edit-btn" role="button">Edit</a>
-            <button (click)="showModal(selectedId)" class="btn btn-danger">Delete</button>
-        </div>
         <div class="content-bg">
             <p *ngIf="!post.published" class="text-danger">(Draft)</p>
             <h1>{{ post.title }}</h1>
@@ -13,11 +9,11 @@
                     <span *ngIf="post.date">{{ post.date.toDate() | date: "mediumDate" }}</span>
                     <span *ngIf="!post.date">Date not found</span>
                 </div>
-                <!-- <span class="badge" *ngFor="let category of post.categories | keyvalue">{{ category.value }}</span> -->
+                <span class="badge badge-light mt-2 mr-2" *ngFor="let category of post.categories | keyvalue">{{ category.value }}</span>
             </div>
-            <div class="mt-4" [innerHTML]="post.body | markdown"></div>
+            <div class="mt-4" [innerHTML]="post.body | markdown" ngPreserveWhitespaces></div>
         </div>
     </div>
 </div>
 
-<modal (post.delete)="onDelete($event)"></modal>
+<loading-spinner *ngIf="loading"></loading-spinner>
