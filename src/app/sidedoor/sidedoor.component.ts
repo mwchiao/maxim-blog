@@ -14,7 +14,12 @@ export class SidedoorComponent implements OnInit {
   message: string;
   loggingIn: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private auth: UserService, private toast: ToastService) { }
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private auth: UserService, 
+    private toast: ToastService
+  ) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({

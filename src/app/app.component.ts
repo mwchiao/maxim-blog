@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ToastService } from './toast.service';
 import { UserService } from './user.service';
@@ -15,15 +15,19 @@ export class AppComponent {
   canEdit: boolean;
   private _loginSub: Subscription;
 
-  constructor(private router: Router, private auth: UserService, private cdRef: ChangeDetectorRef, private toast: ToastService) { }
+  constructor(
+    private router: Router, 
+    private auth: UserService, 
+    private cdRef: ChangeDetectorRef, 
+    private toast: ToastService
+  ) { }
 
   ngOnInit(): void {
     this._loginSub = this.auth.loginEmitter
-                      .subscribe( value => 
-                        {
-                          this.canEdit = value;
-                          this.cdRef.detectChanges();
-                        });
+                      .subscribe( value => {
+                        this.canEdit = value;
+                        this.cdRef.detectChanges();
+                      });
   }
 
   ngOnDestroy(): void {
@@ -41,6 +45,5 @@ export class AppComponent {
         const errMsg = "Something went wrong: " + error.message;
         this.toast.displayMessage(errMsg, "error");
       }); // Show error message
-    this.router.navigate([""]);
   }
 }

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore'
 import { Subscription } from 'rxjs'
 import { BlogPost } from '../blog-post';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-edit',
@@ -20,7 +21,12 @@ export class EditorComponent implements OnInit{
   editForm: FormGroup;
   selectedId: string;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private firestore: AngularFirestore) { }
+  constructor(
+    private fb: FormBuilder, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private firestore: AngularFirestore
+  ) { }
 
   ngOnInit(): void {
     this.editForm = this.fb.group({

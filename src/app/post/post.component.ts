@@ -25,7 +25,12 @@ export class PostComponent implements OnInit, OnDestroy {
   canEdit: boolean = true;
   selectedId: string;
 
-  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, private auth: UserService, private toast: ToastService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private firestore: AngularFirestore, 
+    private auth: UserService, 
+    private toast: ToastService
+  ) { }
 
   ngOnInit(): void {
     this._loginSub = this.auth.loginEmitter.subscribe( value => this.canEdit = value);

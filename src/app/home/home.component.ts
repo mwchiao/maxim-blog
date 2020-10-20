@@ -22,10 +22,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   canEdit: boolean;
   posts: Observable<BlogPost[]>;
 
-  constructor(private firestore: AngularFirestore, private auth: UserService, private cdRef: ChangeDetectorRef, private toast: ToastService) { }
+  constructor(
+    private firestore: AngularFirestore, 
+    private auth: UserService, 
+    private cdRef: ChangeDetectorRef, 
+    private toast: ToastService
+  ) { }
 
   ngOnInit(): void {
-    this._sub = this.auth.loginEmitter.subscribe( value => { this.canEdit = value; this.cdRef.detectChanges() });
+    this._sub = this.auth.loginEmitter
+                  .subscribe( value => { 
+                    this.canEdit = value; 
+                    this.cdRef.detectChanges() 
+                  });
 
     // Maps collection to BlogPosts
     // TODO: Configure query so unpublished posts do not show by default
@@ -49,13 +58,5 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onDelete(id: string): void {
     this.firestore.doc("posts/" + id).delete();
-  }
-
-  testSuccess() {
-    this.toast.displayMessage("Success!", "success");
-  }
-
-  testError() {
-    this.toast.displayMessage("Something went wrong", "error");
   }
 }

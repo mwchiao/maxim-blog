@@ -1,15 +1,16 @@
-<header class="fixed-top bg-light">
+<header class="fixed-top bg-dark">
   <div class="d-flex align-items-center justify-content-between px-3">
     <a routerLink="">Maxim's Blog</a>
+    
     <div id="admin-controls" *ngIf="canEdit">
-      <a [routerLink]="['/editor', 'new']" class="btn btn-light" title="Add new post"><span class="fas fa-plus"></span></a>
-      <button (click)="logout()" class="btn btn-light" title="Logout"><span class="fas fa-sign-out-alt"></span></button>
+      <a [routerLink]="['/editor', 'new']" class="btn btn-header" title="Add new post"><span class="fas fa-plus"></span></a>
+      <button (click)="logout()" class="btn btn-header" title="Logout"><span class="fas fa-sign-out-alt"></span></button>
     </div>
   </div>
 </header>
 
-<toast-messages></toast-messages>
 
-<main>
-  <router-outlet></router-outlet>
-</main>
+<router-outlet></router-outlet>
+
+
+<toast-messages></toast-messages>
