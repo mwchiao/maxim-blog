@@ -1,10 +1,7 @@
-.loading {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
+.content-bg {
     width: 100%;
-    background: rgba(0,0,0,0.125);
+}
 
-    z-index: 105;
+.loading {
+    height: 20vh;
 }

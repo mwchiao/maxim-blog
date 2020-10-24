@@ -1,6 +1,6 @@
 <div class="content-container pt-5">
     <div class="content">
-        <div class="content-bg">
+        <div *ngIf="!loading" class="content-bg">
             <p *ngIf="!post.published" class="text-danger">(Draft)</p>
             <h1>{{ post.title }}</h1>
             <div class="post-info">
@@ -12,7 +12,8 @@
             </div>
             <div class="mt-4" [innerHTML]="post.body | markdown" ngPreserveWhitespaces></div>
         </div>
+        <loading-spinner *ngIf="loading"></loading-spinner>
     </div>
 </div>
 
-<loading-spinner *ngIf="loading"></loading-spinner>
+

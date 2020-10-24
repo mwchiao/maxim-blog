@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BlogPost } from '../blog-post';
@@ -21,6 +22,7 @@ export class PostComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
+    private title: Title,
     private firestore: AngularFirestore,
     private toast: ToastService
   ) { }
@@ -48,6 +50,7 @@ export class PostComponent implements OnInit, OnDestroy {
         this.toast.displayMessage("Post not found", "error");
       };
       this.loading = false;
+      this.title.setTitle(this._post.title + " | Maxim's Blog");
     });
   }
 
