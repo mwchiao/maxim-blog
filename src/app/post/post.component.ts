@@ -30,7 +30,6 @@ export class PostComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._post = {
       title: "", 
-      short_description: "", 
       body: "", 
       published: true,
       date: null,
@@ -44,13 +43,15 @@ export class PostComponent implements OnInit, OnDestroy {
 
     // Maps to BlogPost
     this._postSub = this._doc.get().subscribe( post => {
-      if (post.exists) this._post = post.data() as BlogPost;
+      if (post.exists) {
+        this._post = post.data() as BlogPost;
+        this.title.setTitle(this._post.title + " | Maxim's Blog");
+      }
       else {
         this.router.navigate(["/404"]);
         this.toast.displayMessage("Post not found", "error");
       };
       this.loading = false;
-      this.title.setTitle(this._post.title + " | Maxim's Blog");
     });
   }
 

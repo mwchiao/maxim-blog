@@ -10,7 +10,7 @@
                 </div>
                 <span class="badge badge-light mt-4 mr-2" *ngFor="let category of post.categories | keyvalue">{{ category.value }}</span>
             </div>
-            <div class="mt-4" [innerHTML]="post.body | markdown" ngPreserveWhitespaces></div>
+            <div class="post-body mt-4" [innerHTML]="post.body | markdown" ngPreserveWhitespaces></div>
         </div>
         <loading-spinner *ngIf="loading"></loading-spinner>
     </div>

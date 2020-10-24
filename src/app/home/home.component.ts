@@ -4,7 +4,6 @@ import { Title } from '@angular/platform-browser';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BlogPost } from '../blog-post';
-import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +23,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.title.setTitle("Maxim's Blog");
 
     // Maps collection to BlogPosts
-    // TODO: Configure query so unpublished posts do not show by default
     this._posts$ = this.firestore.collection("posts", ref => ref.orderBy("date", "desc")).snapshotChanges().pipe(map( actions => {
       return actions.map( a => {
         const data = a.payload.doc.data() as BlogPost;
@@ -32,6 +30,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         return { id, ...data };
       });
     }));
+
+    // Subscribe changes to posts in database
     this._postsSub = this._posts$.subscribe( (posts) => {
       this.loading = false;
       this.posts = posts;
