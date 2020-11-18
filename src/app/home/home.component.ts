@@ -14,6 +14,8 @@ import { BlogPost } from '../blog-post';
 export class HomeComponent implements OnInit, OnDestroy {
   private _posts$: Observable<BlogPost[]>;
   private _postsSub: Subscription;
+  private _dateOrder: firebase.firestore.OrderByDirection = "desc";
+  private _descDates: boolean = true;
   loading: boolean = true;
   posts: BlogPost[] = [];
 
@@ -22,8 +24,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.title.setTitle("Maxim's Blog");
 
+    this.getBlogPosts();
+  }
+
+  ngOnDestroy(): void {
+    if (this._postsSub) this._postsSub.unsubscribe();
+  }
+
+  private getBlogPosts(): void {
     // Maps collection to BlogPosts
-    this._posts$ = this.firestore.collection("posts", ref => ref.orderBy("date", "desc")).snapshotChanges().pipe(map( actions => {
+    this._posts$ = this.firestore.collection("posts", ref => ref.orderBy("date", this._dateOrder)).snapshotChanges().pipe(map( actions => {
       return actions.map( a => {
         const data = a.payload.doc.data() as BlogPost;
         const id = a.payload.doc.id;
@@ -38,7 +48,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    if (this._postsSub) this._postsSub.unsubscribe();
+  setDateOrder(descDates: boolean): void {
+    this._descDates = descDates;
+    if (this._descDates) this._dateOrder = "desc" as firebase.firestore.OrderByDirection;
+    else this._dateOrder = "asc" as firebase.firestore.OrderByDirection;
+
+    // Maybe I should reorder my posts client-side
+    this.getBlogPosts();
+  }
+
+  get descDates(): boolean {
+    return this._descDates;
   }
 }
