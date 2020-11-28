@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PostComponent } from './post/post.component';
 import { HomeComponent } from './home/home.component';
-import { ToastService } from './toast.service';
+import { ToastService } from './shared/services/toast.service';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -20,6 +20,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { HeaderComponent } from './header/header.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { FooterComponent } from './footer/footer.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { FooterComponent } from './footer/footer.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AutosizeModule,
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot(),
+    InfiniteScrollModule
   ],
   providers: [ToastService],
   bootstrap: [AppComponent]

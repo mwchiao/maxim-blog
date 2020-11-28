@@ -8,21 +8,6 @@
     color: white;
 }
 
-#filterLabel {
-    display: inherit;
-    align-items: center;
-}
-
-.filter-controls > button {
-    border: none;
-    background: white;
-}
-
-.filter-controls > button:hover,
-.filter-controls > button:focus {
-    background: #d3d5d8;;
-}
-
 .post-container {
     display: flex;
     flex-direction: column;

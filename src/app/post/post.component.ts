@@ -3,8 +3,9 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { BlogPost } from '../blog-post';
-import { ToastService } from '../toast.service';
+import { BlogPost } from '../shared/blog-post';
+import { PostService } from '../shared/services/post.service';
+import { ToastService } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-post',
@@ -23,26 +24,16 @@ export class PostComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute, 
     private router: Router,
     private title: Title,
-    private firestore: AngularFirestore,
-    private toast: ToastService
+    private toast: ToastService,
+    private posts: PostService
   ) { }
 
   ngOnInit(): void {
-    this._post = {
-      title: "", 
-      body: "", 
-      published: true,
-      date: null,
-      categories: null
-    };
+    this._post = new BlogPost();
 
     this.selectedId = this.route.snapshot.paramMap.get("id");
 
-    // Gets selected blog post
-    this._doc = this.firestore.doc("posts/" + this.selectedId);
-
-    // Maps to BlogPost
-    this._postSub = this._doc.get().subscribe( post => {
+    this._postSub = this.posts.getPost(this.selectedId, post => {
       if (post.exists) {
         this._post = post.data() as BlogPost;
         this.title.setTitle(this._post.title + " | Maxim's Blog");

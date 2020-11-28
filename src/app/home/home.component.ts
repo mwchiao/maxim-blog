@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Title } from '@angular/platform-browser';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { BlogPost } from '../blog-post';
+import { BlogPost } from '../shared/blog-post';
+import { PostService } from '../shared/services/post.service';
 
 @Component({
   selector: 'app-home',
@@ -11,19 +10,22 @@ import { BlogPost } from '../blog-post';
   styleUrls: ['./home.component.css']
 })
 
+// rxjs BehaviorSubjects + ngx-infinite-scroll
+
 export class HomeComponent implements OnInit, OnDestroy {
   private _posts$: Observable<BlogPost[]>;
   private _postsSub: Subscription;
-  private _dateOrder: firebase.firestore.OrderByDirection = "desc";
-  private _descDates: boolean = true;
+  private BATCH_SIZE: number = 3;
+  private _lastPost?: BlogPost;
+
   loading: boolean = true;
+  finished: boolean = false;
   posts: BlogPost[] = [];
 
-  constructor(private firestore: AngularFirestore, private title: Title) { }
+  constructor(private postService: PostService, private title: Title) { }
 
   ngOnInit(): void {
     this.title.setTitle("Maxim's Blog");
-
     this.getBlogPosts();
   }
 
@@ -31,33 +33,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this._postsSub) this._postsSub.unsubscribe();
   }
 
-  private getBlogPosts(): void {
-    // Maps collection to BlogPosts
-    this._posts$ = this.firestore.collection("posts", ref => ref.orderBy("date", this._dateOrder)).snapshotChanges().pipe(map( actions => {
-      return actions.map( a => {
-        const data = a.payload.doc.data() as BlogPost;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      });
-    }));
+  getBlogPosts(): void {
+    this.loading = true;
+    this._posts$ = this.postService.getPostsBatch(this.BATCH_SIZE, this._lastPost);
 
     // Subscribe changes to posts in database
+    if (this._postsSub) this._postsSub.unsubscribe(); // Unsubscribe the previous query subscriptions
     this._postsSub = this._posts$.subscribe( (posts) => {
       this.loading = false;
-      this.posts = posts;
+      this.finished = posts.length < this.BATCH_SIZE; // If the # of posts from query is less than the batch size, then there are no more posts after this.
+      this._lastPost = posts[posts.length - 1];
+      this.posts = this.posts.concat(posts);
     });
-  }
-
-  setDateOrder(descDates: boolean): void {
-    this._descDates = descDates;
-    if (this._descDates) this._dateOrder = "desc" as firebase.firestore.OrderByDirection;
-    else this._dateOrder = "asc" as firebase.firestore.OrderByDirection;
-
-    // Maybe I should reorder my posts client-side
-    this.getBlogPosts();
-  }
-
-  get descDates(): boolean {
-    return this._descDates;
   }
 }
