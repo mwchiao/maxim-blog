@@ -21,6 +21,7 @@ import { HeaderComponent } from './header/header.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { FooterComponent } from './footer/footer.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { TagsComponent } from './tags/tags.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     LoadingSpinnerComponent,
     NotFoundComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    TagsComponent
   ],
   imports: [
     BrowserModule,

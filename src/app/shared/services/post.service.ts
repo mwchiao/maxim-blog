@@ -16,7 +16,8 @@ export class PostService {
     return this.firestore.doc("posts/" + id).get();
   }
 
-  getPosts(batchSize?: number, after?: BlogPost): Observable<BlogPost[]> {
+  // Get mulitple posts
+  getPosts(batchSize: number, after?: BlogPost): Observable<BlogPost[]> {
     const collection = this.firestore.collection<BlogPost>("posts", ref => {
       let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
       query = query.orderBy("date", this._dateOrder);
@@ -24,6 +25,15 @@ export class PostService {
       if (after) query = query.startAfter(after["date"]);
       return query;
     });
+    return collection.valueChanges({idField: "id"});
+  }
+
+  getPostsWithTag(tag: string): Observable<BlogPost[]> {
+    const collection = this.firestore.collection<BlogPost>("posts", ref => {
+      return ref.orderBy("date", this._dateOrder)
+                .where("categories", "array-contains-any", [tag]);
+    });
+
     return collection.valueChanges({idField: "id"});
   }
 }

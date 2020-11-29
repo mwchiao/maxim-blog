@@ -5,34 +5,18 @@
     font-size: 16px;
 }
 
+a {
+    color: black;
+}
+
+a:hover,
+a:focus {
+    color: var(--primary);
+}
+
 body {
     background: var(--light);
     font-family: "Poppins", sans-serif;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-form label {
-    margin-top: 1rem;
-    font-size: 1.5rem;
-}
-
-form input,
-form textarea {
-    border: none;
-    border-bottom: 1.75px solid lightgray;
-    background: transparent;
-    transition: border-bottom 0.5s ease;
-}
-
-form input:hover,
-form input:active,
-form textarea:hover,
-form textarea:active {
-    border-bottom: 1.75px solid var(--primary);
 }
 
 .content-container {
@@ -54,12 +38,9 @@ form textarea:active {
     margin-bottom: 2rem;
 }
 
-.edit-btn {
-    background: #edeff2;
-}
-
-.edit-btn:not([disabled]):hover {
-    background: #d3d5d8;
+.badge {
+    font-weight: normal;
+    font-size: 1rem;
 }
 
 @media screen and (min-width: 575.98px) {

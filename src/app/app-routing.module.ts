@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PostComponent } from './post/post.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { TagsComponent } from './tags/tags.component';
 
 const routes: Routes = [
   { 
@@ -13,6 +14,10 @@ const routes: Routes = [
     component: PostComponent
   },
   {
+    path:"tags/:tag",
+    component: TagsComponent
+  },
+  {
     path:"404",
     component: NotFoundComponent
   },
@@ -20,7 +25,7 @@ const routes: Routes = [
     path: "**", 
     redirectTo: "404",
     pathMatch: "full"
-  } // Replace with page not found
+  }
 ];
 
 @NgModule({
