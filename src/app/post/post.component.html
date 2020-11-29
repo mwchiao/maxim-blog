@@ -11,7 +11,7 @@
                 <span class="badge badge-light mt-4 mr-2" 
                       *ngFor="let category of post.categories | keyvalue"
                       >
-                    <a [routerLink]="['tags', category.value]">{{ category.value }}</a>
+                    <a [routerLink]="['/tags', category.value]">{{ category.value }}</a>
                 </span>
             </div>
             <div class="post-body mt-4" [innerHTML]="post.body | markdown" ngPreserveWhitespaces></div>
