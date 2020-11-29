@@ -5,29 +5,26 @@
 </div>
 <div class="content-container">
     <div class="content">
-        <div>
-            <ul class="p-0" *ngIf="posts.length else noPosts">
-                <li class="post-container" *ngFor="let post of posts">
-                    <a class="post" [routerLink]="['post', post.id]">
-                        <div class="card">
-                            <div class="card-body">
-                                <p *ngIf="!post.published" class="text-danger">(Draft)</p>
-                                <h2 class="card-title">{{ post.title }}</h2>
-                                <div class="card-subtitle my-2 text-muted">
-                                    <span *ngIf="post.date">{{ post.date.toDate() | date: "mediumDate" }}</span>
-                                    <span *ngIf="!post.date">Date not found</span>
-                                </div>
-                                <p>{{ post.short_description }}</p>
-                                <div class="mt-3">
-                                    <span class="badge badge-light mr-2 mt-3" *ngFor="let category of post.categories | keyvalue">{{ category.value }}</span>
-                                </div>
+        <ul class="p-0" *ngIf="posts.length">
+            <li class="post-container" *ngFor="let post of posts">
+                <div class="post">
+                    <div class="card">
+                        <div class="card-body">
+                            <p *ngIf="!post.published" class="text-danger">(Draft)</p>
+                            <h2 class="card-title"><a [routerLink]="['post', post.id]">{{ post.title }}</a></h2>
+                            <div class="card-subtitle my-2 text-muted">
+                                <span *ngIf="post.date">{{ post.date.toDate() | date: "mediumDate" }}</span>
+                                <span *ngIf="!post.date">Date not found</span>
+                            </div>
+                            <p>{{ post.short_description }}</p>
+                            <div class="mt-3">
+                                <span class="badge badge-light mr-2 mt-3" *ngFor="let category of post.categories | keyvalue"><a href="javascript:void(0);">{{ category.value }}</a></span>
                             </div>
                         </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <ng-template #noPosts><p>There's nothing here!</p></ng-template>
+                    </div>
+                </div>
+            </li>
+        </ul>
         <div infiniteScroll 
              [infiniteScrollDistance]= "1" 
              [infiniteScrollThrottle]= "1000"
@@ -35,7 +32,7 @@
              *ngIf="!finished"
              >
         </div>
-        <div *ngIf="finished"><p>🐷 That's all, folks!</p></div>
+        <div *ngIf="finished || posts.length == 0"><p class="text-center">🐷 That's all, folks!</p></div>
         <loading-spinner *ngIf="loading"></loading-spinner>
     </div>
 </div>

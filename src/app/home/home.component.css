@@ -5,7 +5,7 @@
 
 .jumbotron h1 {
     font-family: monospace;
-    color: white;
+    color:#05a805;
 }
 
 .post-container {
@@ -37,8 +37,13 @@ p.text-danger {
     margin-bottom: 0;
 }
 
-.post:hover .card-title,
-.post:focus .card-title {
+.post a {
+    display: block;
+    color: black;
+}
+
+.post:hover .card-title > a,
+.post:focus .card-title > a {
     color: var(--primary);
     text-decoration: underline;
 }

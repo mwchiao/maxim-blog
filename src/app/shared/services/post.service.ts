@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { BlogPost } from '../blog-post';
 
 @Injectable({
@@ -13,29 +12,18 @@ export class PostService {
   constructor(private firestore: AngularFirestore) { }
 
   // Gets blog post using id
-  getPost(id: string, callback: (value: firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>) => void): Subscription {
-    const doc = this.firestore.doc("posts/" + id);
-    const subscription = doc.get().subscribe(callback);
-    
-    return subscription;
+  getPost(id: string): Observable<firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>> {
+    return this.firestore.doc("posts/" + id).get();
   }
 
-  getPostsBatch(batchSize: number, after?: BlogPost): Observable<BlogPost[]> {
-    const collection = this.firestore.collection("posts", ref => {
-      if (after) return ref.orderBy("date", this._dateOrder).limit(batchSize).startAfter(after["date"]);
-      return ref.orderBy("date", this._dateOrder).limit(batchSize);
+  getPosts(batchSize?: number, after?: BlogPost): Observable<BlogPost[]> {
+    const collection = this.firestore.collection<BlogPost>("posts", ref => {
+      let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+      query = query.orderBy("date", this._dateOrder);
+      if (batchSize) query = query.limit(batchSize);
+      if (after) query = query.startAfter(after["date"]);
+      return query;
     });
-    
-    return collection.snapshotChanges().pipe(map( actions => {
-      return actions.map( a => {
-        const data = a.payload.doc.data() as BlogPost;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      });
-    }));
-  }
-
-  setDirection(direction: firebase.firestore.OrderByDirection) {
-    this._dateOrder = direction;
+    return collection.valueChanges({idField: "id"});
   }
 }

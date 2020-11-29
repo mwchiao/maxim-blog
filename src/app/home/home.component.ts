@@ -10,8 +10,6 @@ import { PostService } from '../shared/services/post.service';
   styleUrls: ['./home.component.css']
 })
 
-// rxjs BehaviorSubjects + ngx-infinite-scroll
-
 export class HomeComponent implements OnInit, OnDestroy {
   private _posts$: Observable<BlogPost[]>;
   private _postsSub: Subscription;
@@ -35,7 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getBlogPosts(): void {
     this.loading = true;
-    this._posts$ = this.postService.getPostsBatch(this.BATCH_SIZE, this._lastPost);
+    this._posts$ = this.postService.getPosts(this.BATCH_SIZE, this._lastPost);
 
     // Subscribe changes to posts in database
     if (this._postsSub) this._postsSub.unsubscribe(); // Unsubscribe the previous query subscriptions
@@ -43,7 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.finished = posts.length < this.BATCH_SIZE; // If the # of posts from query is less than the batch size, then there are no more posts after this.
       this._lastPost = posts[posts.length - 1];
-      this.posts = this.posts.concat(posts);
+      this.posts = this.posts.concat(posts); // Adds posts from newest query to the posts array
     });
   }
 }
