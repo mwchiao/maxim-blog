@@ -8,8 +8,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   
   title = 'maxim-blog';
-  canEdit: boolean;
-
   constructor() { }
 
   ngOnInit(): void {

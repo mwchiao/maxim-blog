@@ -28,6 +28,7 @@ export class PostService {
     return collection.valueChanges({idField: "id"});
   }
 
+  // Get all posts with tag
   getPostsWithTag(tag: string): Observable<BlogPost[]> {
     const collection = this.firestore.collection<BlogPost>("posts", ref => {
       return ref.orderBy("date", this._dateOrder)

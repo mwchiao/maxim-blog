@@ -29,16 +29,11 @@ p.text-danger {
 .post > .card {
     min-height: 20vh;
     border: none;
-    box-shadow: 0 3px 10px 2px rgba(0,0,0,0.125);;
-    transition: transform 250ms ease;
+    box-shadow: 0 3px 10px 2px rgba(0,0,0,0.125);
 }
 
 .post .card-title {
     margin-bottom: 0;
-}
-
-.post:hover > .card {
-    transform: scale(105%);
 }
 
 .badge {

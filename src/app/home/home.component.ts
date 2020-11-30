@@ -20,7 +20,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   finished: boolean = false;
   posts: BlogPost[] = [];
 
-  constructor(private postService: PostService, private title: Title) { }
+  constructor(private postService: PostService, private title: Title) {
+    this._posts$ = new Observable<BlogPost[]>();
+    this._postsSub = new Subscription();
+  }
 
   ngOnInit(): void {
     this.title.setTitle("Maxim's Blog");

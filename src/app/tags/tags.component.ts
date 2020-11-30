@@ -17,10 +17,13 @@ export class TagsComponent implements OnInit, OnDestroy {
 
   loading: boolean = true;
 
-  constructor(private route: ActivatedRoute, private postService: PostService) { }
+  constructor(private route: ActivatedRoute, private postService: PostService) { 
+    this._posts$ = new Observable<BlogPost[]>();
+    this._postsSub = new Subscription();
+  }
 
   ngOnInit(): void {
-    this._selectedTag = this.route.snapshot.paramMap.get("tag");
+    this._selectedTag = this.route.snapshot.paramMap.get("tag") || "";
     this._posts$ = this.postService.getPostsWithTag(this._selectedTag);
 
     this._postsSub = this._posts$.subscribe(posts => {

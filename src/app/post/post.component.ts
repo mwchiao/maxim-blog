@@ -13,10 +13,10 @@ import { ToastService } from '../shared/services/toast.service';
 })
 export class PostComponent implements OnInit, OnDestroy {
   private _post$: Observable<firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>>;
-  private _post: BlogPost;
   private _postSub: Subscription;
+  private _post: BlogPost = new BlogPost();
   
-  selectedId: string;
+  private _selectedId: string = "";
   loading: boolean = true;
 
   constructor(
@@ -25,13 +25,14 @@ export class PostComponent implements OnInit, OnDestroy {
     private title: Title,
     private toast: ToastService,
     private posts: PostService
-  ) { }
+  ) {
+    this._post$ = new Observable<firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>>();
+    this._postSub = new Subscription();
+  }
 
   ngOnInit(): void {
-    this._post = new BlogPost();
-
-    this.selectedId = this.route.snapshot.paramMap.get("id");
-    this._post$ = this.posts.getPost(this.selectedId);
+    this._selectedId = this.route.snapshot.paramMap.get("id") || "";
+    this._post$ = this.posts.getPost(this._selectedId);
     this._post$.subscribe(post => {
       if (post.exists) {
         this._post = post.data() as BlogPost;

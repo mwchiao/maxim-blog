@@ -5,7 +5,7 @@
             <h1>{{ post.title }}</h1>
             <div class="post-info">
                 <div>
-                    <span *ngIf="post.date">{{ post.date.toDate() | date: "mediumDate" }}</span>
+                    <span >{{ post.date.toDate() | date: "mediumDate" }}</span>
                     <span *ngIf="!post.date">Date not found</span>
                 </div>
                 <span class="badge badge-light mt-4 mr-2" 
@@ -19,5 +19,3 @@
         <loading-spinner *ngIf="loading"></loading-spinner>
     </div>
 </div>
-
-

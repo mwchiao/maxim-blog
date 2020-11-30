@@ -9,12 +9,13 @@ import { ToastMessage, ToastService } from '../../shared/services/toast.service'
 })
 export class ToastMessagesComponent implements OnInit, OnDestroy {
   private _toastSub: Subscription;
-  messages: ToastMessage[];
+  messages: ToastMessage[] = [];
   
-  constructor(private toast: ToastService) { }
+  constructor(private toast: ToastService) { 
+    this._toastSub = new Subscription();
+  }
 
   ngOnInit(): void {
-    this.messages = [];
     this._toastSub = this.toast.messagesEmitter
                       .subscribe( message => this.messages.unshift(message) );
   }
