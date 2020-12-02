@@ -13,7 +13,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
-import { AutosizeModule } from 'ngx-autosize';
 import { ToastMessagesComponent } from './ui/toast-messages/toast-messages.component';
 import { LoadingSpinnerComponent } from './ui/loading-spinner/loading-spinner.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -42,7 +41,6 @@ import { TagsComponent } from './tags/tags.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AutosizeModule,
     MarkdownModule.forRoot(),
     InfiniteScrollModule
   ],
