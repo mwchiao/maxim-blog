@@ -15,7 +15,7 @@
           "options": {
             "allowedCommonJsDependencies": [
               "@angular/fire/firestore",
-              "@firebase/auth"
+              "firebase/app"
             ],
             "outputPath": "dist/maxim-blog",
             "index": "src/index.html",

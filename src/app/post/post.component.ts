@@ -36,7 +36,7 @@ export class PostComponent implements OnInit, OnDestroy {
     this._post$.subscribe(post => {
       if (post.exists) {
         this._post = post.data() as BlogPost;
-        this.title.setTitle(this._post.title + " | Maxim's Blog");
+        this.title.setTitle("[DEMO] " + this._post.title + " | Maxim's Blog");
       }
       else {
         this.router.navigate(["/404"]);

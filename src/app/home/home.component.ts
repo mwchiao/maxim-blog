@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.title.setTitle("Maxim's Blog");
+    this.title.setTitle("[DEMO] Maxim's Blog");
     this.getBlogPosts();
   }
 

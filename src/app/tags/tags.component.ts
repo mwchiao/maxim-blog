@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { BlogPost } from '../shared/blog-post';
@@ -17,13 +18,18 @@ export class TagsComponent implements OnInit, OnDestroy {
 
   loading: boolean = true;
 
-  constructor(private route: ActivatedRoute, private postService: PostService) { 
+  constructor(
+    private title: Title,
+    private route: ActivatedRoute, 
+    private postService: PostService
+  ) { 
     this._posts$ = new Observable<BlogPost[]>();
     this._postsSub = new Subscription();
   }
 
   ngOnInit(): void {
     this._selectedTag = this.route.snapshot.paramMap.get("tag") || "";
+    this.title.setTitle("[DEMO] " + this._selectedTag + " Posts | Maxim's Blog");
     this._posts$ = this.postService.getPostsWithTag(this._selectedTag);
 
     this._postsSub = this._posts$.subscribe(posts => {
