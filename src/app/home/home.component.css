@@ -1,7 +1,18 @@
+.jumbotron {
+    background-color: var(--dark);
+    border-radius: 0;
+}
+
+.jumbotron h1 {
+    font-family: monospace;
+    color:white;
+}
+
 .post-container {
     display: flex;
     flex-direction: column;
     margin: 1rem 0;
+    margin-bottom: 1.75rem;
 }
 
 p.text-danger {
@@ -16,25 +27,15 @@ p.text-danger {
 }
 
 .post > .card {
-    height: 30vh;
-    transition: transform 250ms ease;
+    min-height: 20vh;
+    border: none;
+    box-shadow: 0 3px 10px 2px rgba(0,0,0,0.125);
 }
 
 .post .card-title {
     margin-bottom: 0;
 }
 
-.post:hover .card-title,
-.post:focus .card-title {
-    color: var(--primary);
-    text-decoration: underline;
-}
-
-.post:hover > .card {
-    transform: scale(105%);
-}
-
-.post-text {
-    margin-top: 2.0rem;
-    text-overflow: ellipsis;
+.badge {
+    font-size: 1rem;
 }

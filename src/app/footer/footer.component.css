@@ -1,0 +1,28 @@
+footer {
+    margin-top: 2rem;
+    height: 20vh;
+
+    font-family: monospace;
+}
+
+.contact-links {
+    margin-top: 1.25rem;
+    display: flex;
+    justify-content: center;
+}
+
+.contact-links > a {
+    font-size: 1.25rem;
+    color: black;
+}
+
+.contact-links > a:hover,
+.contact-links > a:focus {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.contact-links .fas,
+.contact-links .fa {
+    margin-right: 1rem;
+}

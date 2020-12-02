@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ToastMessage, ToastService } from '../toast.service';
+import { ToastMessage, ToastService } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'toast-messages',
@@ -9,12 +9,13 @@ import { ToastMessage, ToastService } from '../toast.service';
 })
 export class ToastMessagesComponent implements OnInit, OnDestroy {
   private _toastSub: Subscription;
-  messages: ToastMessage[];
+  messages: ToastMessage[] = [];
   
-  constructor(private toast: ToastService) { }
+  constructor(private toast: ToastService) { 
+    this._toastSub = new Subscription();
+  }
 
   ngOnInit(): void {
-    this.messages = [];
     this._toastSub = this.toast.messagesEmitter
                       .subscribe( message => this.messages.unshift(message) );
   }

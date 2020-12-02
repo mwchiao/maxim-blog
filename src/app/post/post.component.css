@@ -2,3 +2,7 @@ p.text-danger {
     font-size: 1.25rem;
     font-weight: bold;
 }
+
+.post-body {
+    font-family: "Roboto", sans-serif;
+}

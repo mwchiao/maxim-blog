@@ -1,23 +1,21 @@
-<div class="content-container">
+<div class="content-container pt-5">
     <div class="content">
-        <div class="btn-group my-1 w-25" *ngIf="canEdit">
-            <a [routerLink]="['/editor', selectedId]" class="btn edit-btn" role="button">Edit</a>
-            <button (click)="showModal(selectedId)" class="btn btn-danger">Delete</button>
-        </div>
-        <div class="content-bg">
+        <div *ngIf="!loading" class="content-bg">
             <p *ngIf="!post.published" class="text-danger">(Draft)</p>
             <h1>{{ post.title }}</h1>
             <div class="post-info">
                 <div>
-                    <span class="fas fa-calendar mr-1"></span>
-                    <span *ngIf="post.date">{{ post.date.toDate() | date: "mediumDate" }}</span>
+                    <span >{{ post.date.toDate() | date: "mediumDate" }}</span>
                     <span *ngIf="!post.date">Date not found</span>
                 </div>
-                <!-- <span class="badge" *ngFor="let category of post.categories | keyvalue">{{ category.value }}</span> -->
+                <span class="badge badge-light mt-4 mr-2" 
+                      *ngFor="let category of post.categories | keyvalue"
+                      >
+                    <a [routerLink]="['/tags', category.value]">{{ category.value }}</a>
+                </span>
             </div>
-            <div class="mt-4" [innerHTML]="post.body | markdown"></div>
+            <div class="post-body mt-4" [innerHTML]="post.body | markdown" ngPreserveWhitespaces></div>
         </div>
+        <loading-spinner *ngIf="loading"></loading-spinner>
     </div>
 </div>
-
-<modal (post.delete)="onDelete($event)"></modal>
