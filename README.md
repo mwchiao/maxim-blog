@@ -1,27 +1,10 @@
-# MaximBlog
+[![Netlify Status](https://api.netlify.com/api/v1/badges/66feac51-3b27-4d2e-a047-b3bd066b3cba/deploy-status)](https://app.netlify.com/sites/maxim-blog/deploys)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.4.
+# Welcome to Maxim's Blog Demo
 
-## Development server
+This is a platform to host my personal tech blog that I want to start. This is only a demo for now because I recently decided to change around what I used for the backend of this project and is not ready to go into 'production'.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Nevertheless, the look-and-feel is going to be more or less the same so I wanted to put this out here as a type of MVP for the project.
+This version of the project has a Firebase backend, but I am thinking about maybe moving to something like MongoDB instead.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+See the project in action [here](https://maxim-blog.netlify.app/)!
