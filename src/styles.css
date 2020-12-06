@@ -19,32 +19,11 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
-.content-container {
-    display: flex;
-    justify-content: center;
-    padding-top: 1rem;
-}
-
-.content {
-    width: 100%;
-    margin: 0 0.5rem;
-}
-
-.content-bg {
-    border-radius: 5px;
+.card {
     box-shadow: 0 3px 10px 2px rgba(0,0,0,0.125);
-    padding: 1rem;
-    background: white;
-    margin-bottom: 2rem;
 }
 
 .badge {
     font-weight: normal;
     font-size: 1rem;
-}
-
-@media screen and (min-width: 575.98px) {
-    .content {
-        width: 70vw;
-    }
 }
